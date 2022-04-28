@@ -12,40 +12,24 @@ findFloor([1,2,8,10,10,12,19], 0) // -1
 Constraints
  */
 
-// LINEAR SEARCH
-function findFloor(arr, target) {
-  for (let i in arr) {
-    while (target > arr[i]) {
-      if (arr[i] === target) {
-        return arr[i];
-      } else {
-        return arr[i - 1];
-      }
-    }
-    return arr[i - 1];
-  }
-  return -1;
-}
-
 // BINARY SEARCH
 function findFloor(arr, target, low = 0, high = arr.length - 1) {
-  if (high >= low) {
-    let midIdx = Math.floor((high + low) / 2);
-    let mid = arr[midIdx];
+  if (low > high) return -1;
+  if (arr[high] < target) return arr[high];
 
-    if (mid === target) {
-      return mid;
-    } else if (mid < target && arr[midIdx + 1] > target) {
-      return mid;
-    } else if (arr[high] < target) {
-      return arr[high];
-    } else if (mid > target) {
-      return findFloor(arr, target, low, midIdx - 1);
-    } else {
-      return findFloor(arr, target, midIdx + 1, high);
-    }
+  let mid = Math.floor((high + low) / 2);
+
+  if (arr[mid] === target) return arr[mid];
+
+  if (arr[mid] < target && arr[mid + 1] > target) {
+    return arr[mid];
   }
-  return -1;
+
+  if (arr[mid] > target) {
+    return findFloor(arr, target, low, mid - 1);
+  }
+
+  return findFloor(arr, target, mid + 1, high);
 }
 
 module.exports = findFloor;
