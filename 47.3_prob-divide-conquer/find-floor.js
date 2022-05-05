@@ -12,7 +12,7 @@ findFloor([1,2,8,10,10,12,19], 0) // -1
 Constraints
  */
 
-// BINARY SEARCH
+/** BINARY SEARCH */
 function findFloor(arr, target, low = 0, high = arr.length - 1) {
   if (low > high) return -1;
   if (arr[high] < target) return arr[high];

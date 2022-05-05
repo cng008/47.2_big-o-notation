@@ -14,18 +14,18 @@ countZeroes([0,0,0]) // 3
 countZeroes([1,1,1,1]) // 0
  */
 
-// LINEAR SEARCH
-function countZeroes(arr) {
-  let count = 0;
-  for (let num of arr) {
-    if (num === 0) {
-      count++;
-    }
-  }
-  return count;
-}
+/** LINEAR SEARCH */
+// function countZeroes(arr) {
+//   let count = 0;
+//   for (let num of arr) {
+//     if (num === 0) {
+//       count++;
+//     }
+//   }
+//   return count;
+// }
 
-// BINARY SEARCH
+/** BINARY SEARCH */
 function countZeroes(arr, low = 0, high = arr.length - 1) {
   if (high >= low) {
     // get the middle index

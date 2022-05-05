@@ -14,7 +14,7 @@ sortedFrequency([1,1,2,2,2,2,3],1) // 2
 sortedFrequency([1,1,2,2,2,2,3],4) // -1
  */
 
-// LINEAR SEARCH
+/** LINEAR SEARCH */
 // function sortedFrequency(arr, target) {
 //   let count = 0;
 //   for (let i in arr) {
@@ -25,12 +25,16 @@ sortedFrequency([1,1,2,2,2,2,3],4) // -1
 //   return count;
 // }
 
-// BINARY SEARCH
+/** BINARY SEARCH */
+
 function sortedFrequency(arr, target) {
   let first = getFirst(arr, target);
-  if (first === -1) return first;
   let last = getLast(arr, target);
-  return last - first + 1;
+  if (first === -1) {
+    return -1;
+  } else {
+    return last - first + 1;
+  }
 }
 
 // index of the first occurrence of val in arr
