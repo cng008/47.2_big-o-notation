@@ -3,12 +3,11 @@
  * Takes O(n) time
  */
 
-function product(nums) {
-  let product = 1;
-  for (let i of nums) {
-    product *= i;
-  }
-  return product;
+function product(nums, i = 0) {
+  // Base case
+  if (nums.length === i) return 1;
+  // Normal case
+  return nums[i] * product(nums, i + 1);
 }
 
 /** longest: return the length of the longest word in an array of words.
@@ -16,14 +15,12 @@ function product(nums) {
  * Takes O(n) time
  */
 
-function longest(words) {
-  let longestWord = '';
-  for (let i in words) {
-    if (words[i].length > longestWord.length) {
-      longestWord = words[i];
-    }
-  }
-  return longestWord.length;
+function longest(words, i = 0, longestWord = 0) {
+  // Base case
+  if (words.length === i) return longestWord;
+  // Normal case
+  longestWord = Math.max(words[i].length, longestWord);
+  return longest(words, i + 1, longestWord);
 }
 
 /** everyOther: return a string with every other letter.
@@ -32,12 +29,10 @@ function longest(words) {
  */
 
 function everyOther(str, i = 0) {
-  let newStr = '';
-  while (i <= str.length - 1) {
-    newStr += str[i];
-    i += 2;
-  }
-  return newStr;
+  // Base case
+  if (str.length <= i) return '';
+  // Normal case
+  return str[i] + everyOther(str, i + 2);
 }
 
 /** isPalindrome: checks whether a string is a palindrome or not.
@@ -46,11 +41,12 @@ function everyOther(str, i = 0) {
  * Takes O(n) time
  */
 
-function isPalindrome(str) {
-  if (str === str.split('').reverse().join('')) {
-    return true;
-  }
-  return false;
+function isPalindrome(str, start = 0, end = str.length - 1) {
+  // Base case
+  if (start >= end) return true;
+  if (str[start] !== str[end]) return false;
+  // Normal case
+  return isPalindrome(str, start + 1, end - 1);
 }
 
 /** findIndex: return the index of val in arr (or -1 if val is not present).
@@ -60,13 +56,12 @@ function isPalindrome(str) {
  * Takes O(n) time
  */
 
-function findIndex(arr, val) {
-  for (let i in arr) {
-    if (arr[i] === val) {
-      return parseInt(i);
-    }
-  }
-  return -1;
+function findIndex(arr, val, i = 0) {
+  // Base case
+  if (i === arr.length) return -1;
+  if (arr[i] === val) return i;
+  // Normal case
+  return findIndex(arr, val, i + 1);
 }
 
 /** revString: return a copy of a string, but in reverse.
@@ -74,25 +69,68 @@ function findIndex(arr, val) {
  * Takes O(n) time
  */
 
-function revString(str) {
-  return str.split('').reverse().join('');
+function revString(str, i = str.length - 1) {
+  // Base case
+  if (i < 0) return '';
+  // Normal case
+  return str[i] + revString(str, i - 1);
 }
 
-/** gatherStrings: given an object, return an array of all of the string values. */
+/** gatherStrings: given an object, return an array of all of the string values. 
+ * let nestedObj = {
+  firstName: "Lester",
+  favoriteNumber: 22,
+  moreData: {
+    lastName: "Testowitz"
+  },
+  funFacts: {
+    moreStuff: {
+      anotherNumber: 100,
+      deeplyNestedString: {
+        almostThere: {
+          success: "you made it!"
+        }
+      }
+    },
+    favoriteString: "nice!"
+  }
+};
+gatherStrings(nestedObj) // ["Lester", "Testowitz", "you made it!", "nice!"];
+ * Takes O(n) time
+*/
 
 function gatherStrings(obj) {
-  return Object.values(obj);
+  let stringArr = [];
+  // Degenerate case
+  for (let key in obj) {
+    if (typeof obj[key] === 'string') stringArr.push(obj[key]);
+    if (typeof obj[key] === 'object')
+      stringArr.push(...gatherStrings(obj[key]));
+  }
+  return stringArr;
 }
 
 /** binarySearch: given a sorted array of numbers, and a value,
  * return the index of that value (or -1 if val is not present).
- * Takes O(n) time
+ * Takes O(log n) time
  * */
 
-function binarySearch(arr, val) {
-  for (let i in arr) {
-    if (arr[i] === val) {
-      return parseInt(i);
+function binarySearch(arr, val, low = 0, high = arr.length - 1) {
+  // Base case
+  if (arr.length === 0) return -1; // only one element left
+  if (val < arr[low] || val > arr[high]) return -1; // target not in arr
+
+  // Normal case
+  while (high >= low) {
+    // find middle value
+    let mid = Math.floor((high + low) / 2);
+
+    if (arr[mid] > val) {
+      return binarySearch(arr, val, low, mid - 1);
+    } else if (arr[mid] < val) {
+      return binarySearch(arr, val, mid + 1, high);
+    } else {
+      return mid;
     }
   }
   return -1;
