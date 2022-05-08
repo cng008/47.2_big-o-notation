@@ -65,7 +65,9 @@ class LinkedList {
     this.length++;
   }
 
-  /** pop(): return & remove last item. */
+  /** pop(): return & remove last item.
+   * Takes O(n) time
+   */
 
   pop() {
     if (!this.head) {
@@ -75,7 +77,9 @@ class LinkedList {
     return this.removeAt(this.length - 1);
   }
 
-  /** shift(): return & remove first item. */
+  /** shift(): return & remove first item.
+   * Takes O(1) time
+   */
 
   shift() {
     if (!this.head) {
@@ -110,7 +114,9 @@ class LinkedList {
     current.val = val;
   }
 
-  /** insertAt(idx, val): add node w/val before idx. */
+  /** insertAt(idx, val): add node w/val before idx.
+   * Takes O(n) time
+   */
 
   insertAt(idx, val) {
     if (idx > this.length || idx < 0) {
@@ -134,7 +140,9 @@ class LinkedList {
     this.length++;
   }
 
-  /** removeAt(idx): return & remove item at idx, */
+  /** removeAt(idx): return & remove item at idx,
+   * Takes O(n) time because of _get()
+   */
 
   removeAt(idx) {
     if (idx >= this.length || idx < 0) {
@@ -168,7 +176,9 @@ class LinkedList {
     return val;
   }
 
-  /** average(): return an average of all values in the list */
+  /** average(): return an average of all values in the list
+   * Takes O(n) time
+   */
 
   average() {
     if (!this.head) return 0;
