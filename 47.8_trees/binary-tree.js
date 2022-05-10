@@ -14,62 +14,118 @@ class BinaryTree {
   }
 
   /** minDepth(): return the minimum depth of the tree -- that is,
-   * the length of the shortest path from the root to a leaf. */
+   * the length of the shortest path from the root to a leaf.
+   * Takes O(n) time
+   */
 
   minDepth() {
+    if (!this.root) return 0;
 
+    function findMinDepth(node) {
+      // if node doesn't have any children (leaf), accumulate 1.
+      if (node.left === null && node.right === null) return 1;
+
+      // add 1 for each depth level. Run recursive f(x) depending if left/right is null
+      if (node.left === null) return findMinDepth(node.right) + 1;
+      if (node.right === null) return findMinDepth(node.left) + 1;
+      // if neither node is null, return the path which is shorter.
+      return (
+        Math.min(findMinDepth(node.left), findMinDepth(node.right)) + 1 // holds the value 1 in the call stack
+      );
+    }
+
+    return findMinDepth(this.root);
   }
 
   /** maxDepth(): return the maximum depth of the tree -- that is,
-   * the length of the longest path from the root to a leaf. */
+   * the length of the longest path from the root to a leaf.
+   * Takes O(n) time
+   * */
 
   maxDepth() {
+    if (!this.root) return 0;
 
+    function findMaxDepth(node) {
+      if (node.left === null && node.right === null) return 1;
+      if (node.left === null) return findMaxDepth(node.right) + 1;
+      if (node.right === null) return findMaxDepth(node.left) + 1;
+      return Math.max(findMaxDepth(node.left), findMaxDepth(node.right)) + 1;
+    }
+
+    return findMaxDepth(this.root);
   }
 
   /** maxSum(): return the maximum sum you can obtain by traveling along a path in the tree.
-   * The path doesn't need to start at the root, but you can't visit a node more than once. */
+   * The path doesn't need to start at the root, but you can't visit a node more than once.
+   * Takes O(n) time
+   * */
 
   maxSum() {
+    let result = 0;
 
+    function findMaxSum(node) {
+      if (node === null) return 0;
+      const leftSum = findMaxSum(node.left);
+      const rightSum = findMaxSum(node.right);
+      result = Math.max(result, node.val + leftSum + rightSum); // update highest value
+      return Math.max(0, leftSum + node.val, rightSum + node.val); // eliminate node value less than 0
+    }
+
+    findMaxSum(this.root);
+    return result;
   }
 
-  /** nextLarger(lowerBound): return the smallest value in the tree
-   * which is larger than lowerBound. Return null if no such value exists. */
+  /** nextLarger(n): return the smallest value in the tree
+   * which is larger than n. Return null if no such value exists.
+   * Takes O(n) time
+   * */
 
-  nextLarger(lowerBound) {
+  nextLarger(n) {
+    if (!this.root) return null;
 
+    // breadth first search (BFS) --> use queue (FIFO)
+    let queue = [this.root];
+    let closest = null;
+
+    while (queue.length) {
+      let currentNode = queue.shift(); // remove current node from the queue from front
+      let currentVal = currentNode.val;
+      let greaterThanN = currentVal > n;
+      let isClosest = currentVal < closest || closest === null;
+
+      if (greaterThanN && isClosest) {
+        closest = currentVal;
+      }
+
+      // if there are left/right nodes, add them to the queue
+      if (currentNode.left) queue.push(currentNode.left);
+      if (currentNode.right) queue.push(currentNode.right);
+    }
+
+    return closest;
   }
 
   /** Further study!
    * areCousins(node1, node2): determine whether two nodes are cousins
    * (i.e. are at the same level but have different parents. ) */
 
-  areCousins(node1, node2) {
-
-  }
+  areCousins(node1, node2) {}
 
   /** Further study!
    * serialize(tree): serialize the BinaryTree object tree into a string. */
 
-  static serialize() {
-
-  }
+  static serialize() {}
 
   /** Further study!
    * deserialize(stringTree): deserialize stringTree into a BinaryTree object. */
 
-  static deserialize() {
-
-  }
+  static deserialize() {}
 
   /** Further study!
    * lowestCommonAncestor(node1, node2): find the lowest common ancestor
    * of two nodes in a binary tree. */
 
-  lowestCommonAncestor(node1, node2) {
-    
-  }
+  lowestCommonAncestor(node1, node2) {}
 }
 
 module.exports = { BinaryTree, BinaryTreeNode };
