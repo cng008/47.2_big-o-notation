@@ -76,6 +76,28 @@ class Graph {
     return result;
   }
 
+  depthFirstSearchRecursive(start) {
+    const visited = new Set();
+    const result = [];
+
+    function traverse(vertex) {
+      // base case
+      if (!vertex) return null;
+      visited.add(vertex);
+      result.push(vertex.value);
+
+      // visit neighbors
+      vertex.adjacent.forEach(neighbor => {
+        if (!visited.has(neighbor)) {
+          return traverse(neighbor);
+        }
+      });
+    }
+
+    traverse(start);
+    return result;
+  }
+
   // returns an array of Node values using BFS
   breadthFirstSearch(start) {
     // Create an empty queue
