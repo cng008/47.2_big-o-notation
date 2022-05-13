@@ -36,6 +36,7 @@ function merge(arr1, arr2) {
  * Break up the array into halves until you can compare one value with another
  * Once you have smaller sorted arrays, merge those with other sorted pairs until you are back at the full length of the array
  * Once the array is merged back together, return the merged (and sorted!) array
+ * Takes O(n log n) time
  */
 function mergeSort(arr) {
   // base case
