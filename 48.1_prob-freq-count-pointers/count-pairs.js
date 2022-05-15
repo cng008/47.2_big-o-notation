@@ -10,4 +10,24 @@ countPairs([0,-4],-4) // 1
 countPairs([1,2,3,0,-1,-2],0) // 2
  */
 
-function countPairs() {}
+function countPairs(nums, target) {
+  nums.sort((a, b) => a - b);
+  let count = 0;
+  let start = 0;
+  let end = nums.length - 1;
+
+  while (start < end) {
+    let sum = nums[start] + nums[end];
+
+    if (sum === target) {
+      count++;
+      start++;
+      end--;
+    } else if (sum < target) {
+      start++;
+    } else {
+      end--;
+    }
+  }
+  return count;
+}

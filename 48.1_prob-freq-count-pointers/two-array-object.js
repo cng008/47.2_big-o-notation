@@ -9,4 +9,27 @@ twoArrayObject(['a', 'b', 'c'], [1, 2, 3, 4]) // {'a': 1, 'b': 2, 'c': 3}
 twoArrayObject(['x', 'y', 'z'], [1, 2]) // {'x': 1, 'y': 2, 'z': null}
  */
 
-function twoArrayObject() {}
+function twoArrayObject(keys, vals) {
+  let obj = new Object();
+  let i = 0;
+
+  while (i < keys.length) {
+    let value = i < vals.length ? vals[i] : null;
+    obj[keys[i]] = value;
+    i++;
+  }
+  //   for (let i = 0; i < keys.length; i++) {
+  //     let value = i < vals.length ? vals[i] : null;
+  //     obj[keys[i]] = value;
+  //   }
+
+  return obj;
+}
+
+// ALTERNATE SOLUTION
+// function twoArrayObject(keys, values) {
+//     return keys.reduce((obj, cur, idx) => {
+//       obj[cur] = idx < values.length ? values[idx] : null;
+//       return obj;
+//     }, {});
+//   }
